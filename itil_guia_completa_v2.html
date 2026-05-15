@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITIL V3 + ITIL 4 – Guía Completa de Estudio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --bg2: #13161f;
+  --bg3: #1a1e2a;
+  --surface: #1e2333;
+  --surface2: #252b3b;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text: #e8eaf0;
+  --text2: #8b91a8;
+  --text3: #555e78;
+  --accent: #6c8fff;
+  --accent2: #a78bfa;
+  --teal: #34d399;
+  --amber: #fbbf24;
+  --coral: #fb7185;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(13,15,20,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 60px;
+}
+.nav-logo { font-family: var(--font-head); font-size: 17px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 6px; flex-wrap: wrap; }
+.nav-links a { font-size: 12px; color: var(--text2); text-decoration: none; padding: 5px 10px; border-radius: 6px; transition: all .2s; }
+.nav-links a:hover { color: var(--text); background: var(--surface); }
+.nav-ai-btn { font-size: 13px; font-weight: 500; background: var(--accent); color: #fff; border: none; padding: 7px 16px; border-radius: 8px; cursor: pointer; transition: all .2s; font-family: var(--font-body); }
+.nav-ai-btn:hover { background: #5a7fff; transform: translateY(-1px); }
+
+/* HERO */
+.hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 80px 24px 60px; position: relative; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.hero-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.18; }
+.hero-blob-1 { width: 600px; height: 600px; background: var(--accent); top: -200px; left: -100px; animation: drift 12s ease-in-out infinite alternate; }
+.hero-blob-2 { width: 500px; height: 500px; background: var(--accent2); bottom: -150px; right: -100px; animation: drift 16s ease-in-out infinite alternate-reverse; }
+.hero-blob-3 { width: 400px; height: 400px; background: var(--teal); top: 50%; left: 50%; transform: translate(-50%,-50%); animation: drift 10s ease-in-out infinite alternate; }
+@keyframes drift { from { transform: translate(0,0); } to { transform: translate(30px,20px); } }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border2); border-radius: 99px; padding: 6px 16px; font-size: 12px; color: var(--text2); margin-bottom: 28px; animation: fadeUp .6s ease both; }
+.hero-badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: pulse 2s ease infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
+.hero h1 { font-family: var(--font-head); font-size: clamp(42px, 7vw, 80px); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 20px; animation: fadeUp .7s .1s ease both; }
+.hero h1 em { color: var(--accent); font-style: normal; }
+.hero p { max-width: 560px; color: var(--text2); font-size: 17px; font-weight: 300; margin-bottom: 36px; animation: fadeUp .7s .2s ease both; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; animation: fadeUp .7s .3s ease both; }
+.btn-primary { background: var(--accent); color: #fff; border: none; padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: 500; cursor: pointer; transition: all .2s; font-family: var(--font-body); text-decoration: none; display: inline-block; }
+.btn-primary:hover { background: #5a7fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,143,255,.35); }
+.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border2); padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: 500; cursor: pointer; transition: all .2s; font-family: var(--font-body); text-decoration: none; display: inline-block; }
+.btn-ghost:hover { background: var(--surface); }
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+/* STATS BAR */
+.stats-bar { display: flex; justify-content: center; gap: 0; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0; }
+.stat-item { flex: 1; max-width: 200px; text-align: center; padding: 24px 16px; border-right: 1px solid var(--border); }
+.stat-item:last-child { border-right: none; }
+.stat-num { font-family: var(--font-head); font-size: 36px; font-weight: 800; color: var(--accent); }
+.stat-label { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+/* MAIN */
+main { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+section { margin-bottom: 80px; }
+.section-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.section-title { font-family: var(--font-head); font-size: clamp(26px, 4vw, 40px); font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+.section-sub { color: var(--text2); font-size: 15px; max-width: 600px; margin-bottom: 40px; }
+
+/* PHASE CARDS */
+.phases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.phase-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; cursor: pointer; transition: all .25s; position: relative; overflow: hidden; }
+.phase-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.phase-card:hover { transform: translateY(-4px); border-color: var(--border2); background: var(--surface2); }
+.pc-num { font-family: var(--font-head); font-size: 11px; font-weight: 700; letter-spacing: 2px; margin-bottom: 10px; }
+.pc-title { font-family: var(--font-head); font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.pc-desc { font-size: 12px; color: var(--text2); line-height: 1.6; }
+.pc-procs { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 5px; }
+.pc-proc { font-size: 10px; padding: 3px 8px; border-radius: 99px; background: rgba(255,255,255,.06); color: var(--text2); }
+.phase-1::before { background: #6c8fff; } .phase-1 .pc-num { color: #6c8fff; }
+.phase-2::before { background: #34d399; } .phase-2 .pc-num { color: #34d399; }
+.phase-3::before { background: #fbbf24; } .phase-3 .pc-num { color: #fbbf24; }
+.phase-4::before { background: #f87171; } .phase-4 .pc-num { color: #f87171; }
+.phase-5::before { background: #a78bfa; } .phase-5 .pc-num { color: #a78bfa; }
+
+/* DETAIL SECTIONS (tabs per phase) */
+.tabs-wrapper { margin-top: 32px; }
+.tabs-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.tab-btn { font-size: 12px; font-weight: 500; padding: 7px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text2); cursor: pointer; font-family: var(--font-body); transition: all .2s; }
+.tab-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.tab-btn:hover:not(.active) { border-color: var(--border2); color: var(--text); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* INFO GRID */
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+.info-card h3 { font-family: var(--font-head); font-size: 15px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.info-card p { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 8px; }
+.info-card p:last-child { margin-bottom: 0; }
+.info-card ul { font-size: 13px; color: var(--text2); padding-left: 18px; line-height: 1.8; }
+.info-card li { margin-bottom: 3px; }
+.info-card .highlight { color: var(--accent); font-weight: 500; }
+.info-card .highlight-green { color: var(--teal); font-weight: 500; }
+.info-card .highlight-amber { color: var(--amber); font-weight: 500; }
+.info-card .highlight-coral { color: var(--coral); font-weight: 500; }
+.icon-badge { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+
+/* PROCESS LIST */
+.process-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; margin-top: 16px; }
+.proc-item { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: flex; gap: 10px; align-items: flex-start; }
+.proc-num { font-family: var(--font-head); font-size: 20px; font-weight: 800; color: var(--border2); line-height: 1; flex-shrink: 0; min-width: 28px; }
+.proc-info h4 { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.proc-info p { font-size: 12px; color: var(--text2); }
+
+/* ACCORDION */
+.accordion { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.acc-item { border-bottom: 1px solid var(--border); }
+.acc-item:last-child { border-bottom: none; }
+.acc-head { padding: 16px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 500; transition: background .2s; user-select: none; }
+.acc-head:hover { background: var(--surface2); }
+.acc-arrow { font-size: 12px; color: var(--text3); transition: transform .3s; }
+.acc-item.open .acc-arrow { transform: rotate(180deg); }
+.acc-body { display: none; padding: 0 20px 18px; font-size: 13px; color: var(--text2); line-height: 1.7; }
+.acc-item.open .acc-body { display: block; }
+
+/* CONCEPTS GRID */
+.concepts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+.concept-card h3 { font-family: var(--font-head); font-size: 16px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.concept-card p { font-size: 13px; color: var(--text2); line-height: 1.7; }
+
+/* ASSETS TABLE */
+.assets-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.asset-col { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.asset-col-head { padding: 16px 20px; font-family: var(--font-head); font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+.asset-item { padding: 10px 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); font-size: 13px; }
+.asset-item:last-child { border-bottom: none; }
+.asset-badge { width: 22px; height: 22px; border-radius: 5px; background: var(--surface2); font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; color: var(--text2); flex-shrink: 0; }
+
+/* FUNCTIONS */
+.functions-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.fn-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start; }
+.fn-num { font-family: var(--font-head); font-size: 28px; font-weight: 800; color: var(--border2); line-height: 1; flex-shrink: 0; }
+.fn-content h4 { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.fn-content p { font-size: 12px; color: var(--text2); }
+
+/* STEPS */
+.steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.step-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; }
+.step-num { font-family: var(--font-head); font-size: 32px; font-weight: 800; color: var(--border2); line-height: 1; margin-bottom: 8px; }
+.step-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--accent); }
+.step-card p { font-size: 12px; color: var(--text2); }
+
+/* 7Rs */
+.rs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.r-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.r-letter { font-family: var(--font-head); font-size: 28px; font-weight: 800; color: var(--amber); line-height: 1; margin-bottom: 6px; }
+.r-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.r-card p { font-size: 12px; color: var(--text2); }
+
+/* QUIZ */
+.quiz-container { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.quiz-header { padding: 24px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.quiz-header h3 { font-family: var(--font-head); font-size: 18px; font-weight: 700; }
+.quiz-progress { font-size: 13px; color: var(--text2); }
+.quiz-body { padding: 28px; }
+.quiz-q { font-size: 16px; font-weight: 500; margin-bottom: 20px; line-height: 1.5; }
+.quiz-options { display: grid; gap: 10px; }
+.quiz-opt { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; cursor: pointer; font-size: 14px; transition: all .2s; text-align: left; color: var(--text); font-family: var(--font-body); }
+.quiz-opt:hover:not(:disabled) { border-color: var(--accent); background: rgba(108,143,255,.08); }
+.quiz-opt.correct { background: rgba(52,211,153,.12); border-color: var(--teal); color: var(--teal); }
+.quiz-opt.wrong { background: rgba(251,113,133,.12); border-color: var(--coral); color: var(--coral); }
+.quiz-feedback { margin-top: 16px; padding: 14px 16px; border-radius: 10px; font-size: 13px; display: none; }
+.quiz-feedback.show { display: block; }
+.quiz-feedback.ok { background: rgba(52,211,153,.1); color: var(--teal); }
+.quiz-feedback.fail { background: rgba(251,113,133,.1); color: var(--coral); }
+.quiz-nav { display: flex; justify-content: flex-end; margin-top: 20px; }
+
+/* AI CHAT */
+.chat-container { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; height: 600px; }
+.chat-header { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; background: var(--bg2); }
+.chat-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.chat-header-info h4 { font-size: 14px; font-weight: 500; }
+.chat-header-info p { font-size: 11px; color: var(--text2); }
+.chat-status { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); margin-left: auto; animation: pulse 2s infinite; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.msg { display: flex; gap: 10px; animation: fadeUp .3s ease; }
+.msg.user { flex-direction: row-reverse; }
+.msg-avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+.msg-avatar.ai { background: linear-gradient(135deg, var(--accent), var(--accent2)); }
+.msg-avatar.user { background: var(--surface2); }
+.msg-bubble { max-width: 80%; padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.6; }
+.msg.ai .msg-bubble { background: var(--bg3); border: 1px solid var(--border); border-radius: 4px 14px 14px 14px; }
+.msg.user .msg-bubble { background: var(--accent); color: #fff; border-radius: 14px 4px 14px 14px; }
+.msg-bubble strong { color: var(--accent); }
+.msg.user .msg-bubble strong { color: #fff; font-weight: 600; }
+.typing { display: flex; gap: 4px; align-items: center; padding: 14px 16px; }
+.typing-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text3); animation: blink 1.2s ease infinite; }
+.typing-dot:nth-child(2) { animation-delay: .2s; }
+.typing-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%,100%{opacity:.3;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+.chat-input-area { padding: 16px; border-top: 1px solid var(--border); background: var(--bg2); }
+.chat-input-row { display: flex; gap: 10px; align-items: flex-end; }
+.chat-input { flex: 1; background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; color: var(--text); font-size: 14px; font-family: var(--font-body); resize: none; outline: none; max-height: 120px; transition: border-color .2s; }
+.chat-input:focus { border-color: var(--accent); }
+.chat-input::placeholder { color: var(--text3); }
+.chat-send { width: 44px; height: 44px; border-radius: 12px; background: var(--accent); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; flex-shrink: 0; color: #fff; }
+.chat-send:hover { background: #5a7fff; transform: scale(1.05); }
+.chat-send:disabled { background: var(--surface); cursor: not-allowed; transform: none; }
+.chat-send svg { width: 18px; height: 18px; }
+.quick-prompts { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.qp { font-size: 12px; padding: 5px 12px; border-radius: 99px; background: var(--bg3); border: 1px solid var(--border); color: var(--text2); cursor: pointer; transition: all .2s; }
+.qp:hover { border-color: var(--accent); color: var(--accent); }
+
+/* DEMING STEPS */
+.deming-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.deming-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; position: relative; overflow: hidden; }
+.deming-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.deming-p::before { background: var(--accent); }
+.deming-h::before { background: var(--teal); }
+.deming-v::before { background: var(--amber); }
+.deming-a::before { background: var(--coral); }
+.deming-letter { font-family: var(--font-head); font-size: 48px; font-weight: 800; opacity: 0.08; position: absolute; right: 16px; bottom: 8px; line-height: 1; }
+.deming-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+.deming-card p { font-size: 13px; color: var(--text2); }
+
+/* SLA/OLA table */
+.agreements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.agr-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+.agr-tag { display: inline-block; font-family: var(--font-head); font-size: 11px; font-weight: 800; letter-spacing: 2px; padding: 3px 10px; border-radius: 99px; margin-bottom: 10px; }
+.agr-sla { background: rgba(108,143,255,.15); color: var(--accent); }
+.agr-ola { background: rgba(52,211,153,.15); color: var(--teal); }
+.agr-con { background: rgba(251,191,36,.15); color: var(--amber); }
+.agr-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+.agr-card p { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+/* DISPONIBILIDAD */
+.disp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.disp-card { background: var(--bg3); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 16px; }
+.disp-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--accent); }
+.disp-card p { font-size: 12px; color: var(--text2); }
+
+/* INCIDENCIAS / ESCALAMIENTO */
+.esc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.esc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+.esc-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; display: flex; gap: 8px; align-items: center; }
+.esc-card p { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+/* FOOTER */
+footer { text-align: center; padding: 40px 24px; border-top: 1px solid var(--border); color: var(--text3); font-size: 13px; }
+
+@media (max-width: 640px) {
+  .assets-grid, .esc-grid, .deming-grid { grid-template-columns: 1fr; }
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .stat-item { padding: 16px 8px; }
+  .stat-num { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ITIL<span>V3</span></div>
+  <div class="nav-links">
+    <a href="#fases">Fases</a>
+    <a href="#conceptos">Conceptos</a>
+    <a href="#activos">Activos</a>
+    <a href="#diseno">Diseño</a>
+    <a href="#transicion">Transición</a>
+    <a href="#operacion">Operación</a>
+    <a href="#mejora">Mejora</a>
+    <a href="#funciones">Funciones</a>
+    <a href="#itil4">ITIL 4</a>
+    <a href="#itil4-principios">Principios</a>
+    <a href="#itil4-dimensiones">Dimensiones</a>
+    <a href="#quiz">Quiz</a>
+  </div>
+  <button class="nav-ai-btn" onclick="document.getElementById('chat-section').scrollIntoView({behavior:'smooth'})">🤖 Asistente IA</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-blob hero-blob-3"></div>
+  </div>
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Guía completa de estudio · 2026-I
+  </div>
+  <h1>Gestión de<br>Servicios <em>TI</em></h1>
+  <p>Todo lo que necesitas para dominar <strong>ITIL V3 y ITIL 4</strong>: fases, procesos, el SVS, los 7 principios rectores, las 4 dimensiones y más.</p>
+  <div class="hero-btns">
+    <a href="#fases" class="btn-primary">Empezar a estudiar</a>
+    <button class="btn-ghost" onclick="document.getElementById('chat-section').scrollIntoView({behavior:'smooth'})">Hablar con el Asistente</button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Fases ITIL v3</div></div>
+  <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">Principios ITIL 4</div></div>
+  <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Funciones Operación</div></div>
+  <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Dimensiones ITIL 4</div></div>
+  <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">Pasos de Mejora</div></div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- FASES -->
+  <section id="fases">
+    <span class="section-tag">Ciclo de vida</span>
+    <h2 class="section-title">Las 5 Fases de ITIL V3</h2>
+    <p class="section-sub">El enfoque ITIL V3 organiza la gestión de servicios en 5 fases que forman un ciclo continuo centrado en la Estrategia del Servicio.</p>
+    <div class="phases-grid">
+      <div class="phase-card phase-1">
+        <div class="pc-num">FASE 01</div>
+        <div class="pc-title">Estrategia</div>
+        <div class="pc-desc">Define qué servicios ofrecer y a quién. Responde las preguntas fundamentales del negocio.</div>
+        <div class="pc-procs">
+          <span class="pc-proc">Estrategia TI</span><span class="pc-proc">Demanda</span><span class="pc-proc">Portafolio</span><span class="pc-proc">Finanzas</span><span class="pc-proc">Relac. Negocio</span>
+        </div>
+      </div>
+      <div class="phase-card phase-2">
+        <div class="pc-num">FASE 02</div>
+        <div class="pc-title">Diseño</div>
+        <div class="pc-desc">Diseña los servicios de TI de forma integral. Busca equilibrio entre funcionalidad, recursos y tiempo.</div>
+        <div class="pc-procs">
+          <span class="pc-proc">Coord. Diseño</span><span class="pc-proc">Nivel Servicio</span><span class="pc-proc">Catálogo</span><span class="pc-proc">Disponibilidad</span><span class="pc-proc">Capacidad</span><span class="pc-proc">Seguridad</span><span class="pc-proc">Continuidad</span><span class="pc-proc">Suplidores</span>
+        </div>
+      </div>
+      <div class="phase-card phase-3">
+        <div class="pc-num">FASE 03</div>
+        <div class="pc-title">Transición</div>
+        <div class="pc-desc">Lleva el servicio diseñado hacia producción de forma controlada. Es la interfase entre Diseño y Operación.</div>
+        <div class="pc-procs">
+          <span class="pc-proc">Cambios</span><span class="pc-proc">Activo y Config.</span><span class="pc-proc">Liberación</span><span class="pc-proc">Conocimiento</span><span class="pc-proc">Validación</span><span class="pc-proc">Eval. Cambio</span><span class="pc-proc">Sop. Planif.</span>
+        </div>
+      </div>
+      <div class="phase-card phase-4">
+        <div class="pc-num">FASE 04</div>
+        <div class="pc-title">Operación</div>
+        <div class="pc-desc">Gestiona el día a día del servicio, garantizando su funcionamiento estable y eficiente.</div>
+        <div class="pc-procs">
+          <span class="pc-proc">Incidentes</span><span class="pc-proc">Problemas</span><span class="pc-proc">Eventos</span><span class="pc-proc">Acceso</span><span class="pc-proc">Solicitudes</span>
+        </div>
+      </div>
+      <div class="phase-card phase-5">
+        <div class="pc-num">FASE 05</div>
+        <div class="pc-title">Mejora Continua</div>
+        <div class="pc-desc">Evalúa y mejora permanentemente la calidad de los servicios con los 7 Pasos de Mejora y el ciclo PDCA.</div>
+        <div class="pc-procs">
+          <span class="pc-proc">7 Pasos</span><span class="pc-proc">PDCA</span><span class="pc-proc">Métricas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCEPTOS CLAVE -->
+  <section id="conceptos">
+    <span class="section-tag">Fundamentos</span>
+    <h2 class="section-title">Conceptos Clave</h2>
+    <p class="section-sub">Los conceptos esenciales que debes dominar para cualquier examen de ITIL V3.</p>
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <h3><span class="icon-badge" style="background:rgba(108,143,255,.15)">🎯</span> Servicio</h3>
+        <p>Forma de <strong style="color:var(--accent)">entregar valor a los clientes</strong>, facilitando los resultados que quieren alcanzar, sin que el cliente sea dueño de los costos y riesgos relacionados.</p>
+      </div>
+      <div class="concept-card">
+        <h3><span class="icon-badge" style="background:rgba(52,211,153,.15)">🔧</span> Gestión de Servicios</h3>
+        <p>Conjunto de <strong style="color:var(--teal)">capacidades organizacionales especializadas</strong> que proporcionan valor al cliente en forma de servicios.</p>
+      </div>
+      <div class="concept-card">
+        <h3><span class="icon-badge" style="background:rgba(167,139,250,.15)">📋</span> Función en ITIL</h3>
+        <p>Equipo o grupo de personas + las herramientas/recursos que utilizan para llevar a cabo uno o más procesos o actividades. Se diferencian de los procesos porque son equipos con herramientas propias.</p>
+      </div>
+      <div class="concept-card">
+        <h3><span class="icon-badge" style="background:rgba(251,191,36,.15)">💡</span> Proceso en ITIL</h3>
+        <p>Conjunto estructurado de actividades diseñado para cumplir un objetivo específico. Incluye roles, responsabilidades, recursos y controles. Cada proceso tiene un <strong style="color:var(--amber)">Propietario del Proceso</strong> responsable de sus mejoras.</p>
+      </div>
+      <div class="concept-card">
+        <h3><span class="icon-badge" style="background:rgba(251,113,133,.15)">📊</span> Valor del Servicio</h3>
+        <p>Definido en resultados de negocio y <strong style="color:var(--coral)">percepciones del cliente</strong>. Los clientes no compran servicios, compran el llenado de necesidades. Analogía: "no quieren el taladro, quieren el hoyo".</p>
+      </div>
+      <div class="concept-card">
+        <h3><span class="icon-badge" style="background:rgba(108,143,255,.15)">🏆</span> Estrategia del Servicio</h3>
+        <p>Objetivo: identificar la competencia y diferenciarse, ofreciendo mejor rendimiento. Guía para implementar la Gestión como <strong style="color:var(--accent)">Activo Estratégico</strong>. Procede del arte militar (Sun Tzu).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVOS -->
+  <section id="activos">
+    <span class="section-tag">Estrategia</span>
+    <h2 class="section-title">Activos del Servicio</h2>
+    <p class="section-sub">Los activos son las capacidades o recursos de un proveedor de servicios. Las personas son el único activo que aparece en ambas columnas.</p>
+    <div class="assets-grid">
+      <div class="asset-col">
+        <div class="asset-col-head" style="color:var(--accent2)">
+          <span style="font-size:18px">🧠</span> Capacidades <span style="font-size:11px;color:var(--text3);font-weight:400;margin-left:4px">(intangibles)</span>
+        </div>
+        <div class="asset-item"><div class="asset-badge">A1</div> Gestión</div>
+        <div class="asset-item"><div class="asset-badge">A2</div> Organización</div>
+        <div class="asset-item"><div class="asset-badge">A3</div> Procesos</div>
+        <div class="asset-item"><div class="asset-badge">A4</div> Conocimiento</div>
+        <div class="asset-item" style="background:rgba(167,139,250,.06)"><div class="asset-badge" style="background:rgba(167,139,250,.2);color:var(--accent2)">A5</div> Personas ⭐</div>
+      </div>
+      <div class="asset-col">
+        <div class="asset-col-head" style="color:var(--accent)">
+          <span style="font-size:18px">💼</span> Recursos <span style="font-size:11px;color:var(--text3);font-weight:400;margin-left:4px">(tangibles)</span>
+        </div>
+        <div class="asset-item"><div class="asset-badge">A6</div> Capital Financiero</div>
+        <div class="asset-item"><div class="asset-badge">A7</div> Infraestructura</div>
+        <div class="asset-item"><div class="asset-badge">A8</div> Aplicaciones</div>
+        <div class="asset-item"><div class="asset-badge">A9</div> Información</div>
+        <div class="asset-item" style="background:rgba(108,143,255,.06)"><div class="asset-badge" style="background:rgba(108,143,255,.2);color:var(--accent)">A5</div> Personas ⭐</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text3);margin-top:12px">⭐ Las Personas (A5) son el único activo en ambas categorías: como Capacidad (habilidades) y como Recurso (elemento tangible). Las Capacidades no producen valor por sí solas sin los recursos apropiados.</p>
+  </section>
+
+  <!-- ===== DISEÑO DEL SERVICIO ===== -->
+  <section id="diseno">
+    <span class="section-tag">Fase 02</span>
+    <h2 class="section-title">Diseño del Servicio</h2>
+    <p class="section-sub">Se ocupa del diseño y desarrollo de servicios y sus procesos. No solo afecta servicios nuevos, sino también a los modificados para su paso a producción.</p>
+
+    <div class="info-grid" style="margin-bottom:28px">
+      <div class="info-card">
+        <h3>🎯 Propósito</h3>
+        <p>Diseñar servicios de TI junto con las prácticas, procesos y políticas del Gobierno de TI para:</p>
+        <ul>
+          <li>Realizar la Estrategia</li>
+          <li>Facilitar la Introducción al ambiente activo</li>
+          <li>Asegurar la calidad de entrega del servicio</li>
+          <li>Garantizar satisfacción del cliente</li>
+          <li>Provisión de servicios efectivos en costos</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>⚖️ Equilibrio del Diseño</h3>
+        <p>El diseño de servicios TI eficaces y eficientes busca el equilibrio entre:</p>
+        <ul>
+          <li><span class="highlight">Funcionalidad</span> requerida</li>
+          <li><span class="highlight-green">Recursos disponibles</span> (humanos, técnicos, financieros)</li>
+          <li><span class="highlight-amber">Tiempo disponible</span></li>
+        </ul>
+        <p style="margin-top:8px">Para satisfacer las necesidades y demandas del negocio. También incluye cumplimiento de estándares como <strong style="color:var(--accent)">ISO 20000</strong>.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Los 5 Aspectos del Diseño de Servicio</h3>
+    <div class="info-grid" style="margin-bottom:28px">
+      <div class="info-card">
+        <h3><span class="icon-badge" style="background:rgba(108,143,255,.15)">📋</span> 1. Identificar Requerimientos</h3>
+        <ul>
+          <li>Requerimientos del negocio</li>
+          <li>Nuevas facilidades y funcionalidades</li>
+          <li>Cambios en procesos de negocio, prioridades, criticidad</li>
+          <li>Cambios en volumen de transacciones del servicio</li>
+          <li>Nuevos motivadores del negocio</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3><span class="icon-badge" style="background:rgba(52,211,153,.15)">📦</span> 2. Cartera de Servicios</h3>
+        <p>Repositorio central con detalles de todos los servicios y su estado dentro del Ciclo de Vida. Los estados posibles incluyen: <span class="highlight-green">Requerimientos → Definido → Analizado → Aprobado → Graficado → Diseñado → Desarrollado → Construido → Probado → Distribuido → Operacional → Retirado.</span></p>
+      </div>
+      <div class="info-card">
+        <h3><span class="icon-badge" style="background:rgba(251,191,36,.15)">🏗️</span> 3. Arquitectura y Tecnología</h3>
+        <p>Desarrollo y mantenimiento de políticas, estrategias, arquitectura, documentos y planes de TI. La arquitectura empresarial muestra cómo los componentes se integran para lograr los objetivos del negocio actuales y futuros. Incluye: Arquitectura del Servicio, Aplicaciones, Información/Datos, Ambiente, Infraestructura.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="icon-badge" style="background:rgba(251,113,133,.15)">⚙️</span> 4. Diseño del Proceso</h3>
+        <p>Un proceso incluye todos los roles, responsabilidades, recursos y controles para lograr una salida fiable. Sus objetivos deben ser <strong style="color:var(--coral)">medibles</strong> y expresados en términos de beneficios del negocio. Componentes: Propietario, Política, Objetivos, Documentación, Actividades, Métricas, Roles, Procedimientos.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="icon-badge" style="background:rgba(167,139,250,.15)">📏</span> 5. Diseño de Medida</h3>
+        <p><em style="color:var(--accent2)">"Si no puedes medirlo… no puedes gestionarlo"</em></p>
+        <p style="margin-top:8px">Las soluciones deben: ser del nivel de calidad apropiado (ni sobrediseñadas ni subdiseñadas), estar "correctas desde la primera vez", minimizar trabajo repetido y reflejar la habilidad de las soluciones entregadas según los requerimientos acordados.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Acuerdos de Nivel de Servicio</h3>
+    <div class="agreements-grid" style="margin-bottom:28px">
+      <div class="agr-card">
+        <div class="agr-tag agr-sla">SLA</div>
+        <h3>Acuerdo de Nivel de Servicio</h3>
+        <p>Describe los servicios de TI, documentos y metas de niveles del servicio. Especifica las responsabilidades del <strong>cliente</strong> (Proceso de negocio) y del <strong>Proveedor de Servicios de TI (ITSP)</strong>.</p>
+      </div>
+      <div class="agr-card">
+        <div class="agr-tag agr-ola">OLA</div>
+        <h3>Acuerdo de Nivel Operacional</h3>
+        <p>Acuerdo entre el Proveedor de Servicios de TI y otro proveedor del mismo negocio. Ejemplo: con el departamento de mantenimiento para proveer aire acondicionado. Puede ser entre dos partes del mismo proveedor TI.</p>
+      </div>
+      <div class="agr-card">
+        <div class="agr-tag agr-con">CONTRATO</div>
+        <h3>Contrato de Soporte</h3>
+        <p>Gestiona legalmente el acuerdo entre múltiples partes con proveedores externos. En algunas ocasiones es referido como un Contrato de Soporte.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Gestión de la Disponibilidad</h3>
+    <div class="disp-grid" style="margin-bottom:28px">
+      <div class="disp-card">
+        <h4>Contabilidad</h4>
+        <p>Tiempo Medio entre Incidentes de Servicio. Mide con qué frecuencia ocurren los incidentes.</p>
+      </div>
+      <div class="disp-card" style="border-left-color:var(--teal)">
+        <h4>Mantenibilidad</h4>
+        <p>Tiempo Medio de Restauración del Servicio. Mide cuánto tarda recuperar el servicio.</p>
+      </div>
+      <div class="disp-card" style="border-left-color:var(--amber)">
+        <h4>Operabilidad</h4>
+        <p>La habilidad de proveedores terceros para cumplir los términos del contrato.</p>
+      </div>
+      <div class="disp-card" style="border-left-color:var(--coral)">
+        <h4>Cálculo</h4>
+        <p>Basado en el <strong>tiempo del servicio acordado</strong> y la <strong>caída del servicio</strong>. Es una Mejor Práctica calcular usando medidas del resultado del negocio.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Procesos del Diseño del Servicio</h3>
+    <div class="process-list">
+      <div class="proc-item"><div class="proc-num" style="color:rgba(52,211,153,.4)">01</div><div class="proc-info"><h4>Gestión del Nivel de Servicio</h4><p>Negocia y documenta los SLAs con el negocio</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(52,211,153,.4)">02</div><div class="proc-info"><h4>Gestión del Catálogo de Servicios</h4><p>Mantiene información actualizada de todos los servicios activos</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(52,211,153,.4)">03</div><div class="proc-info"><h4>Gestión de la Continuidad TI</h4><p>Garantiza recuperación del servicio ante desastres</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(52,211,153,.4)">04</div><div class="proc-info"><h4>Gestión de la Capacidad</h4><p>Asegura que la capacidad de TI cumpla la demanda</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(52,211,153,.4)">05</div><div class="proc-info"><h4>Gestión de la Disponibilidad</h4><p>Asegura que los servicios estén disponibles según lo acordado</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(52,211,153,.4)">06</div><div class="proc-info"><h4>Gestión del Aprovisionamiento</h4><p>Gestión de proveedores y contratos externos</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(52,211,153,.4)">07</div><div class="proc-info"><h4>Gestión de la Seguridad</h4><p>Protege la información según los acuerdos de seguridad</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(52,211,153,.4)">08</div><div class="proc-info"><h4>Coordinación de Diseño</h4><p>Coordina todas las actividades del Diseño (ITIL 2011)</p></div></div>
+    </div>
+  </section>
+
+  <!-- ===== TRANSICIÓN DEL SERVICIO ===== -->
+  <section id="transicion">
+    <span class="section-tag">Fase 03</span>
+    <h2 class="section-title">Transición del Servicio</h2>
+    <p class="section-sub">Explica cómo convertir las especificaciones del Diseño en un servicio nuevo o modificado. Es la interfase entre el Diseño y la Operación del Servicio.</p>
+
+    <div class="info-grid" style="margin-bottom:28px">
+      <div class="info-card">
+        <h3>🎯 Propósito</h3>
+        <ul>
+          <li>Planificar y gestionar la capacidad y recursos para <strong style="color:var(--accent)">empaquetar, construir, probar y desplegar</strong> una implementación a producción</li>
+          <li>Proporcionar un marco consistente para evaluar la capacidad del servicio y el perfil del riesgo</li>
+          <li>Mantener la integridad de todos los Activos del Servicio identificados y sus configuraciones</li>
+          <li>Reducir las variaciones en el rendimiento y los errores conocidos</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>📐 Ámbito</h3>
+        <p>Incluye la gestión y coordinación de los procesos, sistemas y funciones necesarios para la <strong style="color:var(--teal)">construcción, prueba y despliegue</strong> de una "versión" en producción.</p>
+        <p style="margin-top:8px">Empieza cuando recibe como entrada clave una <strong style="color:var(--accent)">Petición de Cambio (RFC: Request for Change)</strong> del Diseño del Servicio.</p>
+      </div>
+      <div class="info-card">
+        <h3>💡 Consideraciones Básicas</h3>
+        <ul>
+          <li>Implementar siempre todos los cambios a través de la Transición</li>
+          <li>Utilizar estándares y marcos de trabajo</li>
+          <li>Reutilizar procesos y sistemas existentes</li>
+          <li>Crear y mantener relaciones con las partes interesadas</li>
+          <li>Establecer "controles" eficaces</li>
+          <li>Planificar paquetes de versiones y despliegues</li>
+          <li>Gestionar los recursos de manera proactiva</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Sistema de Gestión del Conocimiento del Servicio (SKMS)</h3>
+    <div class="info-grid" style="margin-bottom:28px">
+      <div class="info-card">
+        <h3>🗄️ SKMS</h3>
+        <p>Incluye una gran cantidad de datos que constituyen el conocimiento. Incluye datos de la <strong style="color:var(--accent)">Base de Datos de Gestión de la Configuración (CMDB)</strong> y el Sistema de Gestión de la Configuración (CMS).</p>
+      </div>
+      <div class="info-card">
+        <h3>📚 Base de Conocimiento</h3>
+        <p>Cubre una gran base de conocimiento como:</p>
+        <ul>
+          <li>La experiencia del personal</li>
+          <li>Requerimientos, habilidades y expectativas del proveedor</li>
+          <li>Niveles típicos y anticipados de la habilidad del usuario</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>🔧 Elementos de Configuración (CI)</h3>
+        <p>Un CI es un activo, componente de servicio o cualquier elemento que está o estará bajo el control de la Gestión de la Configuración. Pueden variar mucho en complejidad, tamaño y tipo: desde un servicio completo hasta un solo módulo de software.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Tipos de Cambio de Servicio</h3>
+    <div class="info-grid" style="margin-bottom:28px">
+      <div class="info-card">
+        <h3><span style="color:var(--teal)">✓</span> Cambio Estándar</h3>
+        <p>Pre autorizado por la Gestión del Cambio. Es un cambio para un servicio o infraestructura que ya tiene un proceso aprobado y documentado.</p>
+      </div>
+      <div class="info-card">
+        <h3><span style="color:var(--accent)">→</span> Cambio Normal</h3>
+        <p>Generado por una petición, no representa ningún riesgo elevado. Sigue el flujo estándar de gestión de cambios.</p>
+      </div>
+      <div class="info-card">
+        <h3><span style="color:var(--coral)">⚡</span> Cambio de Emergencia</h3>
+        <p>El impacto puede ser más grande que el incidente original. Los detalles son comúnmente capturados en una fecha posterior. Requiere aprobación del <strong style="color:var(--coral)">Comité de Cambios de Emergencia (ECAB)</strong>.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Las 7 Rs de Gestión de Cambio</h3>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Preguntas utilizadas para la evaluación del impacto de los cambios:</p>
+    <div class="rs-grid">
+      <div class="r-card"><div class="r-letter">R</div><h4>Raised (Generó)</h4><p>¿Quién GENERÓ el cambio?</p></div>
+      <div class="r-card"><div class="r-letter">R</div><h4>Relación</h4><p>¿Cuál es la RELACIÓN entre este cambio y otros?</p></div>
+      <div class="r-card"><div class="r-letter">R</div><h4>Razón</h4><p>¿Cuál es la RAZÓN para el cambio?</p></div>
+      <div class="r-card"><div class="r-letter">R</div><h4>Responsable</h4><p>¿Quién es el RESPONSABLE por construir, probar e implementar?</p></div>
+      <div class="r-card"><div class="r-letter">R</div><h4>Retorno</h4><p>¿Cuál es el RETORNO requerido por parte del cambio?</p></div>
+      <div class="r-card"><div class="r-letter">R</div><h4>Recursos</h4><p>¿Qué RECURSOS son requeridos para enviar el cambio?</p></div>
+      <div class="r-card"><div class="r-letter">R</div><h4>Riesgos</h4><p>¿Cuáles son los RIESGOS involucrados en el cambio?</p></div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin:28px 0 16px">Procesos de la Transición del Servicio</h3>
+    <div class="process-list">
+      <div class="proc-item"><div class="proc-num" style="color:rgba(251,191,36,.4)">01</div><div class="proc-info"><h4>Gestión del Cambio</h4><p>Controla el ciclo de vida de todos los cambios</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(251,191,36,.4)">02</div><div class="proc-info"><h4>Activos del Servicio y Configuración</h4><p>Mantiene información sobre CIs y sus relaciones</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(251,191,36,.4)">03</div><div class="proc-info"><h4>Gestión de Versión y Despliegue</h4><p>Planifica, programa y controla las implementaciones</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(251,191,36,.4)">04</div><div class="proc-info"><h4>Planeación y Soporte de Transición</h4><p>Planifica y coordina los recursos de transición</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(251,191,36,.4)">05</div><div class="proc-info"><h4>Validación del Servicio y Prueba</h4><p>Asegura que el servicio cumple los requerimientos</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(251,191,36,.4)">06</div><div class="proc-info"><h4>Evaluación del Cambio</h4><p>Evalúa el impacto real vs especificado del cambio</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(251,191,36,.4)">07</div><div class="proc-info"><h4>Gestión del Conocimiento</h4><p>Asegura que la información correcta esté disponible</p></div></div>
+    </div>
+  </section>
+
+  <!-- ===== OPERACIÓN DEL SERVICIO ===== -->
+  <section id="operacion">
+    <span class="section-tag">Fase 04</span>
+    <h2 class="section-title">Operación del Servicio</h2>
+    <p class="section-sub">Proporciona orientación sobre cómo lograr una entrega efectiva y eficiente y dar soporte a los servicios en el día a día.</p>
+
+    <div class="info-grid" style="margin-bottom:28px">
+      <div class="info-card">
+        <h3>🎯 Propósito</h3>
+        <ul>
+          <li>Coordinar y ejecutar las actividades y procesos necesarios</li>
+          <li>Entregar servicios con los <strong style="color:var(--accent)">niveles establecidos</strong> a usuarios y clientes</li>
+          <li>Gestionar continuamente la tecnología utilizada para entregar y dar soporte</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>⚡ Eventos y Alertas</h3>
+        <p><strong style="color:var(--amber)">Evento:</strong> Cambio del estado significativo para la gestión de un CI o Servicio TI. Son alertas o notificaciones creadas por servicios TI, CIs o herramientas de monitoreo.</p>
+        <p style="margin-top:8px"><strong style="color:var(--amber)">Alerta:</strong> Advertencia de que uno de los umbrales ha sido alcanzado o un cambio/falla ha ocurrido. Gestionadas principalmente por la Gestión de Eventos.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Conceptos Clave de Operación</h3>
+    <div class="info-grid" style="margin-bottom:28px">
+      <div class="info-card">
+        <h3>🔴 Incidencia</h3>
+        <p>Interrupción <strong style="color:var(--coral)">no planeada</strong> o reducción en la calidad de un servicio TI (interrupción total o degradación). Cualquier cosa que pueda afectar un servicio en el futuro también se cataloga como incidente.</p>
+        <p style="margin-top:8px">Herramientas para gestionarlos: gestión de riesgo, escenarios probables, recursos y herramientas adecuados. Los de alta prioridad son <strong style="color:var(--coral)">Incidentes Mayores</strong>.</p>
+      </div>
+      <div class="info-card">
+        <h3>🔵 Problema</h3>
+        <p>La <strong style="color:var(--accent)">causa de uno o más incidentes</strong>. La causa comúnmente es desconocida al momento de crear el Registro de Problemas.</p>
+        <p style="margin-top:8px">Propósito clave: reducir la probabilidad y el impacto de los incidentes identificando sus causas reales y potenciales. Herramientas: <strong style="color:var(--accent)">5 Porqués, Diagrama de Ishikawa, Diagrama de Pareto</strong>.</p>
+      </div>
+      <div class="info-card">
+        <h3>📋 Solicitud de Servicio</h3>
+        <p>Generada porque un usuario pide información, consejo o un cambio estándar. Manejada por el <strong style="color:var(--teal)">Centro de Servicio al Usuario</strong> y no requiere RFC. Ejemplos: resetear contraseña, proveer servicio TI estándar a nuevo usuario.</p>
+      </div>
+      <div class="info-card">
+        <h3>⚠️ Error Conocido</h3>
+        <p>Un problema que tiene una <strong style="color:var(--amber)">causa cuya raíz y su alternativa han sido documentadas</strong>. Los errores conocidos pueden ser identificados por equipos de desarrollo o proveedores. Se almacenan en la Base de Datos de Errores Conocidos (KEDB), parte del SKMS.</p>
+      </div>
+      <div class="info-card">
+        <h3>🔄 Alternativas (Workarounds)</h3>
+        <p>Reducen o eliminan el impacto de un incidente o problema para el cual no hay solución total disponible. Ejemplo: reiniciar un CI fallido.</p>
+        <ul style="margin-top:8px">
+          <li>Para incidentes sin Registro de Problemas → documentadas en el incidente</li>
+          <li>Para problemas → documentadas en los Errores Conocidos</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>📊 Impacto, Urgencia y Prioridad</h3>
+        <p><strong style="color:var(--accent)">Impacto:</strong> Medición del efecto de un incidente/problema/cambio en los procesos del negocio.</p>
+        <p style="margin-top:6px"><strong style="color:var(--teal)">Urgencia:</strong> Cuánto tiempo tarda en tener un impacto significativo en el negocio.</p>
+        <p style="margin-top:6px"><strong style="color:var(--amber)">Prioridad</strong> = f(Impacto, Urgencia). Identifica la importancia y el tiempo necesario para actuar. Los SLAs pueden establecer que incidentes de prioridad 2 se resuelvan en 12 horas.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Tipos de Escalamiento</h3>
+    <div class="esc-grid" style="margin-bottom:28px">
+      <div class="esc-card">
+        <h3>⬆️ Escalamiento Funcional</h3>
+        <p>Transfiere un incidente o problema a un <strong>equipo técnico con mayor nivel de experiencia</strong> para asistir en la escalación. Ejemplo: Nivel 2, Nivel 3.</p>
+      </div>
+      <div class="esc-card">
+        <h3>🏢 Escalamiento Jerárquico</h3>
+        <p>Informa o involucra a los <strong>niveles superiores de gestión</strong> para asistir en un escalamiento. Se activa cuando se necesita autoridad administrativa o más recursos.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Procesos de la Operación del Servicio</h3>
+    <div class="process-list" style="margin-bottom:28px">
+      <div class="proc-item"><div class="proc-num" style="color:rgba(248,113,113,.4)">01</div><div class="proc-info"><h4>Gestión de Incidencias</h4><p>Restaurar el servicio normal lo antes posible</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(248,113,113,.4)">02</div><div class="proc-info"><h4>Gestión de Eventos</h4><p>Monitorear todos los eventos en la infraestructura TI</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(248,113,113,.4)">03</div><div class="proc-info"><h4>Cumplimiento de Petición (Solicitud)</h4><p>Manejar solicitudes de servicio de los usuarios</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(248,113,113,.4)">04</div><div class="proc-info"><h4>Gestión de Problemas</h4><p>Identificar y eliminar causas raíz de los incidentes</p></div></div>
+      <div class="proc-item"><div class="proc-num" style="color:rgba(248,113,113,.4)">05</div><div class="proc-info"><h4>Gestión de Accesos</h4><p>Otorgar derechos para usar servicios a usuarios autorizados</p></div></div>
+    </div>
+  </section>
+
+  <!-- ===== MEJORA CONTINUA ===== -->
+  <section id="mejora">
+    <span class="section-tag">Fase 05</span>
+    <h2 class="section-title">Mejora Continua del Servicio</h2>
+    <p class="section-sub">Depende de cómo se identifiquen y utilicen las oportunidades de mejora a lo largo de todo el Ciclo de Vida. Se apoya en el Ciclo PDCA de Deming.</p>
+
+    <div class="info-grid" style="margin-bottom:28px">
+      <div class="info-card">
+        <h3>🎯 Objetivos</h3>
+        <ul>
+          <li>Revisar y hacer recomendaciones sobre <strong style="color:var(--accent2)">oportunidades de mejora</strong> en cada fase</li>
+          <li>Mejorar la calidad de los servicios TI</li>
+          <li>Aumentar la eficiencia y efectividad de los procesos ITSM</li>
+          <li>Reducir el costo de la efectividad de la entrega</li>
+          <li>Asegurar que los métodos de Gestión de Calidad soporten la MCS</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>💭 Máximas de Medición</h3>
+        <div style="padding:12px;background:var(--bg3);border-radius:8px;margin-top:8px">
+          <p style="color:var(--accent2);margin-bottom:6px">Si no puedes <strong>definirlo</strong> → no puedes medirlo</p>
+          <p style="color:var(--amber);margin-bottom:6px">Si no puedes <strong>medirlo</strong> → no puedes controlarlo</p>
+          <p style="color:var(--teal)">Si no puedes <strong>controlarlo</strong> → no puedes gestionarlo</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Ciclo de Deming (PDCA)</h3>
+    <div class="deming-grid" style="margin-bottom:28px">
+      <div class="deming-card deming-p">
+        <div class="deming-letter">P</div>
+        <h4 style="color:var(--accent)">PLANEAR</h4>
+        <p>Definir objetivos y procesos necesarios para obtener resultados acordes a los requisitos del cliente y las políticas de la organización. ¿Cuál es tu visión? ¿En dónde estamos ahora?</p>
+      </div>
+      <div class="deming-card deming-h">
+        <div class="deming-letter">H</div>
+        <h4 style="color:var(--teal)">HACER</h4>
+        <p>Implementar los procesos. ¿Dónde queremos estar? Ejecutar lo planificado y recolectar datos. La información se recoge principalmente en la fase de Operación del Servicio.</p>
+      </div>
+      <div class="deming-card deming-v">
+        <div class="deming-letter">V</div>
+        <h4 style="color:var(--amber)">VERIFICAR</h4>
+        <p>Realizar el seguimiento y medir los procesos y productos respecto a las políticas, objetivos y requisitos. ¿Cómo podemos llegar ahí? Analizar datos y tendencias.</p>
+      </div>
+      <div class="deming-card deming-a">
+        <div class="deming-letter">A</div>
+        <h4 style="color:var(--coral)">ACTUAR</h4>
+        <p>Tomar acciones para mejorar continuamente el rendimiento del proceso. ¿Hemos llegado? Implementar acciones correctivas y crear nuevo punto de referencia.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Los 7 Pasos del Proceso de Mejora</h3>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <h4>Definir lo que debe medir</h4>
+        <p>¿Qué necesita el negocio? ¿Cómo los servicios TI cubren esas necesidades? Los tomadores de decisiones de TI y el negocio definen los elementos a medir.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <h4>Definir lo que puede medir</h4>
+        <p>Análisis de carencias que conduce a un plan de métricas. Identificar la diferencia entre lo que se debería y lo que se puede medir.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <h4>Recolectar los datos</h4>
+        <p>¿Quién? ¿Cómo? ¿Cuándo? ¿Integridad de los datos? La información se recoge en la fase de Operación mediante los elementos de monitorización definidos en el Diseño.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <h4>Procesar los datos</h4>
+        <p>¿Frecuencia? ¿Formato? ¿Sistema? ¿Precisión? La información recogida se procesa para obtener los indicadores definidos.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">05</div>
+        <h4>Analizar los datos</h4>
+        <p>¿Relaciones? ¿Tendencias? ¿De acuerdo con el plan? ¿Objetivos alcanzados? Se valida que el valor de los indicadores sea adecuado para los objetivos.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">06</div>
+        <h4>Presentar y usar la información</h4>
+        <p>La información se formatea y comunica a todos los actores clave para la toma de decisiones. Requiere buenas habilidades de comunicación.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">07</div>
+        <h4>Implementar acción correctiva</h4>
+        <p>Se establece y prioriza las mejoras a implementar. Después de esta fase se crea un nuevo punto de referencia para evaluación de posteriores mejoras.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNCIONES -->
+  <section id="funciones">
+    <span class="section-tag">Operación del Servicio</span>
+    <h2 class="section-title">Las 4 Funciones de Operación</h2>
+    <p class="section-sub">ITIL define exactamente 4 funciones dentro de la fase de Operación del Servicio. Las funciones se diferencian de los procesos porque son equipos con herramientas propias. Operan en 3 líneas de soporte.</p>
+    <div class="functions-list">
+      <div class="fn-card">
+        <div class="fn-num" style="color:rgba(108,143,255,.3)">01</div>
+        <div class="fn-content">
+          <h4>Centro de Servicio al Usuario</h4>
+          <p>Service Desk. Punto único de contacto (SPOC). Maneja solicitudes de servicio, incidentes y consultas. 1ra Línea de Soporte.</p>
+        </div>
+      </div>
+      <div class="fn-card">
+        <div class="fn-num" style="color:rgba(52,211,153,.3)">02</div>
+        <div class="fn-content">
+          <h4>Gestión Técnica</h4>
+          <p>Gestión y soporte de la infraestructura TI. Conocimiento técnico especializado. 3ra Línea de Soporte.</p>
+        </div>
+      </div>
+      <div class="fn-card">
+        <div class="fn-num" style="color:rgba(251,191,36,.3)">03</div>
+        <div class="fn-content">
+          <h4>Gestión de Aplicaciones</h4>
+          <p>Responde al ciclo de vida completo de las aplicaciones, desde su desarrollo hasta su retiro. 3ra Línea de Soporte.</p>
+        </div>
+      </div>
+      <div class="fn-card">
+        <div class="fn-num" style="color:rgba(251,113,133,.3)">04</div>
+        <div class="fn-content">
+          <h4>Gestión de Operaciones TI</h4>
+          <p>Responsable de la operación diaria del servicio. Controla la infraestructura y gestiona los eventos. 2da Línea de Soporte.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ITIL 4 – INTRODUCCIÓN ===== -->
+  <section id="itil4">
+    <span class="section-tag">ITIL 4 · Nueva Versión</span>
+    <h2 class="section-title">Fundamentos de ITIL 4</h2>
+    <p class="section-sub">ITIL 4 surge en la era de la Cuarta Revolución Industrial y la transformación digital. Amplía y reemplaza al ciclo de vida de ITIL v3 con un sistema de valor más flexible e integral.</p>
+
+    <div class="info-grid" style="margin-bottom:28px">
+      <div class="info-card">
+        <h3>🚀 ¿Qué es ITIL 4?</h3>
+        <p>ITIL 4 ofrece un <strong style="color:var(--accent)">enfoque práctico y flexible</strong> para apoyar diversas organizaciones. Proporciona un modelo operativo digital de extremo a extremo para la entrega y el funcionamiento de los productos y servicios disponibles.</p>
+        <p style="margin-top:8px">Permite a los equipos de TI continuar desempeñando un papel importante en una <strong style="color:var(--accent)">estrategia empresarial más amplia</strong>, integrando marcos como <strong style="color:var(--teal)">Lean, Agile y DevOps</strong>.</p>
+      </div>
+      <div class="info-card">
+        <h3>🏗️ Modelo Operativo Digital</h3>
+        <p>Es la estructura mediante la cual una organización define cómo se crean, entregan y mantienen los servicios de TI; qué procesos, roles, tecnologías y datos intervienen; y cómo se integran herramientas digitales.</p>
+        <ul style="margin-top:8px">
+          <li>Automatización e Inteligencia Artificial</li>
+          <li>Analítica de datos y Nube</li>
+          <li>Enfoque "de extremo a extremo": diseño → desarrollo → despliegue → operación → mejora continua</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>🇵🇪 Contexto Peruano</h3>
+        <p><strong style="color:var(--amber)">D.L. N° 1412 (13/09/2018)</strong> – "Ley de Gobierno Digital": establece el marco de gobernanza para identidad digital, servicios digitales, arquitectura digital, interoperabilidad, seguridad digital y datos.</p>
+        <p style="margin-top:8px"><strong style="color:var(--amber)">D.S. N° 085-2023-PCM</strong> – "Política Nacional de Transformación Digital al 2030": define el <em>QUÉ</em> (obligaciones, políticas, objetivos). ITIL 4 define el <em>CÓMO</em> (procesos, prácticas, mejora continua).</p>
+      </div>
+    </div>
+
+    <!-- V3 vs V4 -->
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">ITIL v3 vs ITIL 4 — Comparativa</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px">
+        <div style="font-family:var(--font-head);font-size:13px;font-weight:700;color:var(--text2);margin-bottom:14px;letter-spacing:1px">ITIL v3</div>
+        <ul style="font-size:13px;color:var(--text2);padding-left:18px;line-height:2">
+          <li>Surge cuando TI necesita alinearse con el negocio</li>
+          <li>TI busca ser un activo estratégico para el negocio</li>
+          <li>Ciclo de vida del servicio: procesos agrupados en etapas (enfoque <strong>secuencial</strong>)</li>
+          <li>Los procesos son la esencia de ITIL</li>
+        </ul>
+      </div>
+      <div style="background:var(--surface);border:2px solid rgba(108,143,255,.3);border-radius:14px;padding:22px">
+        <div style="font-family:var(--font-head);font-size:13px;font-weight:700;color:var(--accent);margin-bottom:14px;letter-spacing:1px">ITIL 4 ✦ NUEVO</div>
+        <ul style="font-size:13px;color:var(--text2);padding-left:18px;line-height:2">
+          <li>Surge en la <strong style="color:var(--accent)">Cuarta Revolución Industrial</strong>: era de transformación digital</li>
+          <li>TI busca <strong style="color:var(--accent)">habilitar</strong> el negocio</li>
+          <li>Sistema de valor del servicio: cadena de valor soportada por otros elementos</li>
+          <li>El valor es el elemento central; las prácticas solo soportan la cadena de valor</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Esquema de Certificación -->
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Esquema de Certificación ITIL 4</h3>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:28px">
+      <div style="text-align:center;margin-bottom:16px">
+        <div style="display:inline-block;background:rgba(167,139,250,.15);border:1px solid rgba(167,139,250,.3);border-radius:10px;padding:10px 32px;font-family:var(--font-head);font-weight:700;color:var(--accent2);font-size:16px;margin-bottom:12px">🏆 ITIL Master</div>
+      </div>
+      <div style="display:grid;grid-template-columns:3fr 2fr;gap:12px;margin-bottom:12px">
+        <div style="background:rgba(108,143,255,.08);border:1px solid rgba(108,143,255,.2);border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px">Profesional de Gestión de ITIL (MP)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;font-size:11px;color:var(--text2)">
+            <div style="background:var(--bg3);border-radius:6px;padding:6px">Especialista: Crear, entregar y apoyar</div>
+            <div style="background:var(--bg3);border-radius:6px;padding:6px">Especialista: Dirigir el valor de partes interesadas</div>
+            <div style="background:var(--bg3);border-radius:6px;padding:6px">Especialista: TI de alta velocidad</div>
+            <div style="background:var(--bg3);border-radius:6px;padding:6px">Estratega ITIL: Dirigir, planear y mejorar</div>
+          </div>
+        </div>
+        <div style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:8px">Líder Estratégico ITIL (SL)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;color:var(--text2)">
+            <div style="background:var(--bg3);border-radius:6px;padding:6px">Estratega ITIL: Dirigir, planear y mejorar</div>
+            <div style="background:var(--bg3);border-radius:6px;padding:6px">Líder ITIL: Estrategia digital y TI</div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div style="display:inline-block;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:8px;padding:8px 40px;font-family:var(--font-head);font-weight:700;color:var(--amber);font-size:14px">📘 ITIL Foundation (punto de entrada)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ITIL 4 – SVS Y COMPONENTES ===== -->
+  <section id="itil4-svs">
+    <span class="section-tag">ITIL 4 · SVS</span>
+    <h2 class="section-title">Sistema de Valor del Servicio (SVS)</h2>
+    <p class="section-sub">El SVS de ITIL 4 es el marco que define cómo todos los componentes y actividades de una organización trabajan juntos para facilitar la creación de valor.</p>
+
+    <div class="info-grid" style="margin-bottom:28px">
+      <div class="info-card">
+        <h3>📋 Principios Guía</h3>
+        <p>Recomendaciones que pueden guiar a una organización en cualquier circunstancia, independientemente de los cambios de objetivos.</p>
+      </div>
+      <div class="info-card">
+        <h3>🏛️ Gobernabilidad</h3>
+        <p>Los medios por los cuales una organización es <strong style="color:var(--accent)">dirigida y controlada</strong>.</p>
+      </div>
+      <div class="info-card">
+        <h3>⛓️ Cadena de Valor del Servicio</h3>
+        <p>Modelo operativo que describe las <strong style="color:var(--teal)">actividades clave</strong> necesarias para responder a la demanda y facilitar la realización de valor.</p>
+      </div>
+      <div class="info-card">
+        <h3>🔧 Prácticas</h3>
+        <p>Conjunto de recursos organizacionales diseñados para <strong style="color:var(--amber)">realizar un trabajo o lograr un objetivo</strong>. Reemplaza el concepto de "procesos" de ITIL v3.</p>
+      </div>
+      <div class="info-card">
+        <h3>🔄 Mejora Continua</h3>
+        <p>Estrategia organizacional con objetivo de mejorar los productos, servicios, procesos operativos y las relaciones de la organización.</p>
+      </div>
+    </div>
+
+    <!-- Conceptos clave de valor ITIL 4 -->
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Conceptos Clave de Valor en ITIL 4</h3>
+    <div class="concepts-grid" style="margin-bottom:28px">
+      <div class="concept-card">
+        <h3><span class="icon-badge" style="background:rgba(108,143,255,.15)">💎</span> Valor</h3>
+        <p>La <strong style="color:var(--accent)">percepción de los beneficios, la utilidad y la importancia</strong> de algo. El valor es siempre co-creado entre el proveedor y el consumidor.</p>
+      </div>
+      <div class="concept-card">
+        <h3><span class="icon-badge" style="background:rgba(52,211,153,.15)">🏢</span> Organización</h3>
+        <p>Una persona o grupo de personas con sus propias funciones, <strong style="color:var(--teal)">responsabilidades, autoridades y relaciones</strong> para lograr sus objetivos. Puede ser una entidad legal, parte de una o múltiples.</p>
+      </div>
+      <div class="concept-card">
+        <h3><span class="icon-badge" style="background:rgba(251,191,36,.15)">🤝</span> Co-Creación de Valor</h3>
+        <p>El valor es <strong style="color:var(--amber)">co-creado a través de una colaboración activa</strong> entre los proveedores de servicios y los consumidores. Ya no es una relación unidireccional.</p>
+      </div>
+      <div class="concept-card">
+        <h3><span class="icon-badge" style="background:rgba(251,113,133,.15)">📦</span> Servicio (ITIL 4)</h3>
+        <p>Un medio para permitir la <strong style="color:var(--coral)">co-creación de valor</strong> al facilitar los resultados que los clientes desean lograr, sin que el cliente tenga que gestionar costos y riesgos específicos.</p>
+      </div>
+      <div class="concept-card">
+        <h3><span class="icon-badge" style="background:rgba(108,143,255,.15)">📱</span> Producto</h3>
+        <p>Una <strong style="color:var(--accent)">configuración de los recursos de una organización</strong>, diseñada para ofrecer valor para el consumidor.</p>
+      </div>
+      <div class="concept-card">
+        <h3><span class="icon-badge" style="background:rgba(167,139,250,.15)">🗂️</span> Oferta de Servicio</h3>
+        <p>Descripción de uno o más servicios diseñados para satisfacer necesidades. Puede incluir <strong style="color:var(--accent2)">bienes, acceso a recursos y acciones de servicio</strong>.</p>
+      </div>
+    </div>
+
+    <!-- Utilidad y Garantía -->
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Utilidad y Garantía</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:14px;padding:20px">
+        <div style="font-family:var(--font-head);font-weight:700;color:var(--accent);margin-bottom:8px">✅ Utilidad — "Fit for purpose"</div>
+        <p style="font-size:13px;color:var(--text2)">La funcionalidad ofrecida por un producto o servicio para <strong style="color:var(--accent)">satisfacer una necesidad particular</strong>. Representa lo que hace el servicio. El servicio debe ser "adecuado para el propósito".</p>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:14px;padding:20px">
+        <div style="font-family:var(--font-head);font-weight:700;color:var(--teal);margin-bottom:8px">🔒 Garantía — "Fit for use"</div>
+        <p style="font-size:13px;color:var(--text2)">Asegurar que un producto o servicio cumple con los <strong style="color:var(--teal)">requisitos acordados</strong>. Asegura el nivel adecuado de disponibilidad, capacidad, continuidad y seguridad. El servicio debe ser "adecuado para el uso".</p>
+      </div>
+    </div>
+
+    <!-- Consumidores de Servicio -->
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Roles de Consumidores del Servicio</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:28px">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center">
+        <div style="font-size:28px;margin-bottom:8px">👤</div>
+        <div style="font-family:var(--font-head);font-weight:700;color:var(--accent);font-size:14px;margin-bottom:6px">Cliente</div>
+        <p style="font-size:12px;color:var(--text2)">Define los requisitos para un servicio y asume la responsabilidad de los resultados del consumo del servicio.</p>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center">
+        <div style="font-size:28px;margin-bottom:8px">💻</div>
+        <div style="font-family:var(--font-head);font-weight:700;color:var(--teal);font-size:14px;margin-bottom:6px">Usuario</div>
+        <p style="font-size:12px;color:var(--text2)">Una persona que usa los servicios en el día a día.</p>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center">
+        <div style="font-size:28px;margin-bottom:8px">💰</div>
+        <div style="font-family:var(--font-head);font-weight:700;color:var(--amber);font-size:14px;margin-bottom:6px">Patrocinador (Sponsor)</div>
+        <p style="font-size:12px;color:var(--text2)">Una persona que autoriza el presupuesto para el consumo del servicio.</p>
+      </div>
+    </div>
+
+    <!-- Valor desde diferentes stakeholders -->
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Valor desde Diferentes Stakeholders</h3>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:28px">
+      <div style="padding:14px 20px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 2fr;gap:16px;font-size:12px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase">
+        <div>Stakeholder</div><div>Valor (Ejemplo)</div>
+      </div>
+      <div style="padding:14px 20px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 2fr;gap:16px;font-size:13px">
+        <div style="color:var(--accent);font-weight:500">Usuarios del servicio</div><div style="color:var(--text2)">Beneficios, costos y riesgos optimizados</div>
+      </div>
+      <div style="padding:14px 20px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 2fr;gap:16px;font-size:13px">
+        <div style="color:var(--teal);font-weight:500">Proveedor de servicios</div><div style="color:var(--text2)">Desarrollo empresarial; mejora de la imagen</div>
+      </div>
+      <div style="padding:14px 20px;display:grid;grid-template-columns:1fr 2fr;gap:16px;font-size:13px">
+        <div style="color:var(--amber);font-weight:500">Accionistas</div><div style="color:var(--text2)">Beneficios financieros (dividendos); sensación de fiabilidad y estabilidad</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ITIL 4 – 7 PRINCIPIOS RECTORES ===== -->
+  <section id="itil4-principios">
+    <span class="section-tag">ITIL 4 · Principios</span>
+    <h2 class="section-title">Los 7 Principios Rectores</h2>
+    <p class="section-sub">Son recomendaciones que guían a una organización en cualquier circunstancia. Los principios interactúan entre sí y dependen unos de otros.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:28px">
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:14px;padding:22px">
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:800;color:rgba(108,143,255,.25);margin-bottom:6px">01</div>
+        <div style="font-family:var(--font-head);font-weight:700;font-size:16px;color:var(--accent);margin-bottom:10px">Centrarse en el Valor</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:8px">Todo lo que hace la organización debe relacionarse, directa o indirectamente, con el valor para las partes interesadas.</p>
+        <ul style="font-size:12px;color:var(--text3);padding-left:16px;line-height:1.8">
+          <li>Comprender quién es el consumidor del servicio</li>
+          <li>Conocer la perspectiva de valor del consumidor</li>
+          <li>Considerar la experiencia del cliente (CX)</li>
+          <li>¿Por qué el consumidor usa los servicios?</li>
+        </ul>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--teal);border-radius:14px;padding:22px">
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:800;color:rgba(52,211,153,.25);margin-bottom:6px">02</div>
+        <div style="font-family:var(--font-head);font-weight:700;font-size:16px;color:var(--teal);margin-bottom:10px">Empezar donde Estás</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:8px">No empezar sin considerar primero lo que ya está disponible para ser aprovechado. Enfocarse en reutilizar en lugar de comenzar desde cero.</p>
+        <ul style="font-size:12px;color:var(--text3);padding-left:16px;line-height:1.8">
+          <li>Evaluar servicios y métodos ya existentes</li>
+          <li>Medir y observar el estado actual</li>
+          <li>Identificar qué puede reutilizarse para crear nuevo valor</li>
+        </ul>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--amber);border-radius:14px;padding:22px">
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:800;color:rgba(251,191,36,.25);margin-bottom:6px">03</div>
+        <div style="font-family:var(--font-head);font-weight:700;font-size:16px;color:var(--amber);margin-bottom:10px">Progreso Iterativo con Retroalimentación</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:8px">Dividir el trabajo en componentes más pequeños y manejables. Las iteraciones ayudan a recolectar datos tempranos y permiten ajustes continuos.</p>
+        <ul style="font-size:12px;color:var(--text3);padding-left:16px;line-height:1.8">
+          <li>Pueden ser simultáneas o secuenciales</li>
+          <li>Cada iteración debe crear mejoras tangibles</li>
+          <li>Buscar retroalimentación antes, durante y después</li>
+        </ul>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--coral);border-radius:14px;padding:22px">
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:800;color:rgba(251,113,133,.25);margin-bottom:6px">04</div>
+        <div style="font-family:var(--font-head);font-weight:700;font-size:16px;color:var(--coral);margin-bottom:10px">Colaborar y Promover la Visibilidad</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:8px">Eliminar los "silos" y fomentar la confianza. La gente de la organización necesita trabajar junta y compartir información.</p>
+        <ul style="font-size:12px;color:var(--text3);padding-left:16px;line-height:1.8">
+          <li><strong style="color:var(--coral)">Mentalidad de Silo:</strong> cuando departamentos no comparten información</li>
+          <li>Identificar con quién colaborar (internos y externos)</li>
+          <li>Definir métodos efectivos de comunicación</li>
+        </ul>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent2);border-radius:14px;padding:22px">
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:800;color:rgba(167,139,250,.25);margin-bottom:6px">05</div>
+        <div style="font-family:var(--font-head);font-weight:700;font-size:16px;color:var(--accent2);margin-bottom:10px">Pensar y Trabajar Holísticamente</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:8px">Ningún servicio, práctica, proceso, departamento o proveedor es independiente. Las actividades de la organización deben centrarse en la entrega de valor de forma integrada.</p>
+        <ul style="font-size:12px;color:var(--text3);padding-left:16px;line-height:1.8">
+          <li>Reconocer la complejidad de los sistemas</li>
+          <li>La colaboración es clave para el enfoque holístico</li>
+          <li>La automatización facilita la visibilidad de extremo a extremo</li>
+        </ul>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid #38bdf8;border-radius:14px;padding:22px">
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:800;color:rgba(56,189,248,.2);margin-bottom:6px">06</div>
+        <div style="font-family:var(--font-head);font-weight:700;font-size:16px;color:#38bdf8;margin-bottom:10px">Mantenerlo Simple y Práctico</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:8px">Identificar y eliminar procesos, servicios, acciones o métricas que no añaden ningún valor. Usar el mínimo número de pasos necesarios para lograr un objetivo.</p>
+        <ul style="font-size:12px;color:var(--text3);padding-left:16px;line-height:1.8">
+          <li>Pensamiento basado en resultados</li>
+          <li>Ser consciente de objetivos conflictivos</li>
+          <li>Producir soluciones prácticas con resultados valiosos</li>
+        </ul>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid #fb923c;border-radius:14px;padding:22px">
+        <div style="font-family:var(--font-head);font-size:24px;font-weight:800;color:rgba(251,146,60,.2);margin-bottom:6px">07</div>
+        <div style="font-family:var(--font-head);font-weight:700;font-size:16px;color:#fb923c;margin-bottom:10px">Optimizar y Automatizar</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:8px">Optimizar la labor de recursos humanos y técnicos. Las organizaciones deben automatizar el trabajo en la medida posible, requiriendo mínima intervención humana.</p>
+        <ul style="font-size:12px;color:var(--text3);padding-left:16px;line-height:1.8">
+          <li>Automatización = eficiencia y reducción de errores</li>
+          <li>Los humanos se enfocan en trabajo de mayor valor</li>
+          <li>Requiere optimización antes de automatizar</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div style="background:rgba(108,143,255,.06);border:1px solid rgba(108,143,255,.2);border-radius:12px;padding:18px">
+      <p style="font-size:13px;color:var(--text2)">💡 <strong style="color:var(--accent)">Interacción entre principios:</strong> Los principios rectores interactúan entre sí y dependen unos de otros. Por ejemplo, si una organización avanza iterativamente con retroalimentación, también debe pensar y trabajar holísticamente para garantizar que cada iteración incluya todos los elementos necesarios.</p>
+    </div>
+  </section>
+
+  <!-- ===== ITIL 4 – 4 DIMENSIONES ===== -->
+  <section id="itil4-dimensiones">
+    <span class="section-tag">ITIL 4 · Dimensiones</span>
+    <h2 class="section-title">Las 4 Dimensiones de ITIL 4</h2>
+    <p class="section-sub">Las 4 dimensiones deben ser consideradas para el eficiente funcionamiento de la totalidad del Sistema de Valor del Servicio (SVS). Representan perspectivas relevantes para todo el SVS.</p>
+
+    <!-- Dimensión 1 -->
+    <div style="margin-bottom:24px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div style="width:36px;height:36px;background:rgba(108,143,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:800;color:var(--accent)">1</div>
+        <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;color:var(--accent)">Organizaciones y Personas</h3>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>🏗️ Estructura Organizacional</h3>
+          <p>Una estructura organizativa bien definida permite alinear a la gente con la estrategia global y el modelo operativo de la organización.</p>
+          <ul style="margin-top:8px">
+            <li>Roles y responsabilidades claramente definidos</li>
+            <li>Estructura organizacional formal</li>
+            <li>Personal requerido y competencias</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>🌐 Cultura Organizacional</h3>
+          <p>La cultura es la manera en que una organización lleva a cabo su labor, creando valores y actitudes compartidas. Incluye: visión, valores, normas, sistemas, símbolos, idioma, suposiciones, creencias y costumbres.</p>
+        </div>
+        <div class="info-card">
+          <h3>👥 Personas, Habilidades y Competencias</h3>
+          <p>Las personas son un recurso clave. Es importante prestar atención no solo a las habilidades individuales, sino también a estilos de gestión, liderazgo, comunicación y colaboración.</p>
+          <p style="margin-top:8px"><strong style="color:var(--accent)">Objetivo común:</strong> el resultado que la empresa quiere lograr. Todos deben entenderlo claramente.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dimensión 2 -->
+    <div style="margin-bottom:24px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div style="width:36px;height:36px;background:rgba(52,211,153,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:800;color:var(--teal)">2</div>
+        <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;color:var(--teal)">Información y Tecnología</h3>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>📊 Información</h3>
+          <p>Todos los negocios contienen datos = información. Para esta dimensión, hay que responder:</p>
+          <ul style="margin-top:8px">
+            <li>¿Qué información va a gestionar los servicios?</li>
+            <li>¿Qué información de apoyo y conocimiento se requiere para ofrecer y gestionar los servicios?</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>💻 Tecnología</h3>
+          <p>Casi todos los servicios actuales se basan en la tecnología. Una organización puede optar por utilizarla en cualquier momento para sus productos o servicios.</p>
+          <p style="margin-top:8px"><strong style="color:var(--teal)">Factores que afectan a la tecnología:</strong></p>
+          <ul style="margin-top:4px">
+            <li>Cultura organizacional</li>
+            <li>Naturaleza del negocio (datos sensibles → restricciones)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dimensión 3 -->
+    <div style="margin-bottom:24px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div style="width:36px;height:36px;background:rgba(251,191,36,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:800;color:var(--amber)">3</div>
+        <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;color:var(--amber)">Socios y Proveedores</h3>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>🤝 Relaciones con Otras Organizaciones</h3>
+          <p>Los socios y proveedores pueden estar involucrados en cada fase: diseño, desarrollo, implementación, entrega, soporte y mejora continua.</p>
+          <p style="margin-top:8px">Mantener relaciones sanas es esencial para ofrecer el valor requerido a los clientes.</p>
+        </div>
+        <div class="info-card">
+          <h3>📋 Gestión de Socios y Proveedores</h3>
+          <ul>
+            <li>Contratos y acuerdos formales</li>
+            <li>Servicio de integración y gestión</li>
+            <li>Evaluación continua del desempeño</li>
+            <li>Alineación con objetivos de la organización</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dimensión 4 -->
+    <div style="margin-bottom:28px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div style="width:36px;height:36px;background:rgba(251,113,133,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:800;color:var(--coral)">4</div>
+        <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;color:var(--coral)">Procesos y Flujos de Valor</h3>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>⛓️ Flujos de Valor (Value Streams)</h3>
+          <p>Una serie de pasos que una organización utiliza para <strong style="color:var(--coral)">crear y entregar productos y servicios</strong> a los usuarios del servicio.</p>
+          <p style="margin-top:8px">Un value stream es una combinación de las actividades de la cadena de valor de la organización. Los patrones dentro del funcionamiento de la cadena de valor se denominan <strong style="color:var(--coral)">flujos de valor</strong>.</p>
+        </div>
+        <div class="info-card">
+          <h3>🔄 Procesos</h3>
+          <p>Un conjunto de actividades interrelacionadas que <strong style="color:var(--accent)">transforman insumos en productos</strong>.</p>
+          <ul style="margin-top:8px">
+            <li>Definen la secuencia de acciones y sus dependencias</li>
+            <li>Tienen una o más entradas definidas → salidas definidas</li>
+            <li>Incluyen procedimientos detallados con quién participa e instrucciones de trabajo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PESTLE -->
+    <h3 style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:16px">Factores Externos – Modelo PESTLE</h3>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:14px">El modelo PESTLE identifica los factores externos que afectan a las 4 dimensiones y al SVS de ITIL 4.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:28px">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-family:var(--font-head);font-weight:800;font-size:20px;color:var(--accent);margin-bottom:6px">P</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Políticos</div>
+        <p style="font-size:11px;color:var(--text2)">Regulaciones, leyes y políticas gubernamentales</p>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-family:var(--font-head);font-weight:800;font-size:20px;color:var(--teal);margin-bottom:6px">E</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Económicos</div>
+        <p style="font-size:11px;color:var(--text2)">Condiciones económicas, presupuesto, costos</p>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-family:var(--font-head);font-weight:800;font-size:20px;color:var(--amber);margin-bottom:6px">S</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Sociales</div>
+        <p style="font-size:11px;color:var(--text2)">Tendencias sociales, cultura, demografía</p>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-family:var(--font-head);font-weight:800;font-size:20px;color:var(--coral);margin-bottom:6px">T</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Tecnológicos</div>
+        <p style="font-size:11px;color:var(--text2)">Innovación tecnológica, automatización, IA</p>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-family:var(--font-head);font-weight:800;font-size:20px;color:var(--accent2);margin-bottom:6px">L</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Legales</div>
+        <p style="font-size:11px;color:var(--text2)">Marco legal, normativas, cumplimiento</p>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-family:var(--font-head);font-weight:800;font-size:20px;color:#38bdf8;margin-bottom:6px">E</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Ambientales</div>
+        <p style="font-size:11px;color:var(--text2)">Sostenibilidad, impacto ambiental, ecología</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LEAN / AGILE / DEVOPS ===== -->
+  <section id="itil4-marcos">
+    <span class="section-tag">ITIL 4 · Marcos Complementarios</span>
+    <h2 class="section-title">Lean, Agile y DevOps</h2>
+    <p class="section-sub">ITIL 4 integra de forma nativa estos marcos de trabajo modernos. Son fundamentales para entender cómo ITIL 4 se adapta a entornos de transformación digital.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--teal);border-radius:14px;padding:22px">
+        <div style="font-family:var(--font-head);font-weight:700;font-size:18px;color:var(--teal);margin-bottom:12px">♻️ Lean</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:10px">Metodología nacida como Lean Manufacturing en Japón (base: F.W. Taylor y Henry Ford). Se centra en la continua mejora y optimización del sistema de producción.</p>
+        <ul style="font-size:12px;color:var(--text3);padding-left:16px;line-height:1.8">
+          <li><strong style="color:var(--teal)">Elimina desperdicios</strong> y actividades que no agregan valor</li>
+          <li>Minimiza las pérdidas en cualquier proceso</li>
+          <li>Utiliza solo los recursos imprescindibles</li>
+        </ul>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:14px;padding:22px">
+        <div style="font-family:var(--font-head);font-weight:700;font-size:18px;color:var(--accent);margin-bottom:12px">⚡ Agile</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:10px">Marco de gestión iterativa e incremental centrado en la entrega de valor continuo y la adaptación al cambio.</p>
+        <ul style="font-size:12px;color:var(--text3);padding-left:16px;line-height:1.8">
+          <li><strong style="color:var(--accent)">Metodologías más usadas:</strong> XP, Scrum, Kanban</li>
+          <li>Agile Inception, Design Sprint (Google)</li>
+          <li>Gestión Agile: ScrumLearn, AgileLearn, AgilePM, AgileBA</li>
+        </ul>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--amber);border-radius:14px;padding:22px">
+        <div style="font-family:var(--font-head);font-weight:700;font-size:18px;color:var(--amber);margin-bottom:12px">🔧 DevOps</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:10px">Respuesta a la interdependencia del desarrollo de software y las operaciones IT. Los equipos de desarrollo y operaciones colaboran para crear, probar e implementar aplicaciones con velocidad, calidad y control.</p>
+        <ul style="font-size:12px;color:var(--text3);padding-left:16px;line-height:1.8">
+          <li>Apps móviles y nativas en la nube</li>
+          <li>Integración de aplicaciones y gestión multinube</li>
+          <li>DevOps Agile Skills Association (DASA)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz">
+    <span class="section-tag">Autoevaluación</span>
+    <h2 class="section-title">Quiz de Práctica</h2>
+    <p class="section-sub">Pon a prueba tus conocimientos con preguntas tipo examen de ITIL V3 e ITIL 4.</p>
+    <div class="quiz-container">
+      <div class="quiz-header">
+        <h3>Pregunta <span id="q-num">1</span> de 22</h3>
+        <span class="quiz-progress" id="q-score">Puntaje: 0 / 0</span>
+      </div>
+      <div class="quiz-body">
+        <div class="quiz-q" id="q-text"></div>
+        <div class="quiz-options" id="q-opts"></div>
+        <div class="quiz-feedback" id="q-feedback"></div>
+        <div class="quiz-nav">
+          <button class="btn-primary" id="q-next" onclick="nextQuestion()" style="display:none;font-size:14px;padding:10px 22px">Siguiente →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI CHAT -->
+  <section id="chat-section">
+    <span class="section-tag">Inteligencia Artificial</span>
+    <h2 class="section-title">Asistente IA Experto en ITIL</h2>
+    <p class="section-sub">Pregúntale lo que quieras sobre ITIL V3, ITIL 4, Gestión de Servicios TI, los 7 principios, las 4 dimensiones y todo lo del curso.</p>
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="chat-avatar">🤖</div>
+        <div class="chat-header-info">
+          <h4>Asistente ITIL V3 + ITIL 4</h4>
+          <p>Experto en Gestión de Servicios TI · ITIL Expert</p>
+        </div>
+        <div class="chat-status"></div>
+      </div>
+      <div class="chat-messages" id="chat-msgs">
+        <div class="msg ai">
+          <div class="msg-avatar ai">🤖</div>
+          <div class="msg-bubble">¡Hola! Soy tu asistente experto en <strong>ITIL V3 e ITIL 4</strong>. Puedo ayudarte con fases del ciclo de vida, el SVS, los 7 principios rectores, las 4 dimensiones, SLA, OLA, incidentes, cambios, y mucho más. ¿Qué quieres repasar?</div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <div class="quick-prompts">
+          <span class="qp" onclick="sendQuick(this)">¿Qué es el SVS en ITIL 4?</span>
+          <span class="qp" onclick="sendQuick(this)">Los 7 principios de ITIL 4</span>
+          <span class="qp" onclick="sendQuick(this)">Las 4 dimensiones de ITIL 4</span>
+          <span class="qp" onclick="sendQuick(this)">¿Qué es un SLA vs OLA?</span>
+          <span class="qp" onclick="sendQuick(this)">Diferencia incidente vs problema</span>
+          <span class="qp" onclick="sendQuick(this)">ITIL v3 vs ITIL 4 ¿cuáles son las diferencias?</span>
+        </div>
+        <div class="chat-input-row">
+          <textarea class="chat-input" id="chat-input" placeholder="Pregunta cualquier cosa sobre ITIL V3 o ITIL 4..." rows="1"
+            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}"
+            oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+          <button class="chat-send" id="chat-send-btn" onclick="sendMessage()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 2L11 13M22 2L15 22 11 13 2 9l20-7z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Gestión de Servicios TI – ITIL V3 + ITIL 4 · Facultad de Ingeniería de Sistemas · UNCP</p>
+  <p style="margin-top:6px;color:var(--text3)">Docente: Jesús Ulloa Ninahuamán · 2026-I</p>
+</footer>
+
+<script>
+// ==================== QUIZ ====================
+const questions = [
+  // --- ITIL V3 ---
+  { q: "¿Cuántas fases tiene el Ciclo de Vida del Servicio en ITIL V3?", opts: ["3 fases","4 fases","5 fases","6 fases"], ans: 2, exp: "ITIL V3 tiene exactamente 5 fases: Estrategia, Diseño, Transición, Operación y Mejora Continua del Servicio." },
+  { q: "¿Cómo se define un 'Servicio' según ITIL V3?", opts: ["Un producto de software entregado al cliente","Una forma de entregar valor a clientes sin que asuman los costos y riesgos","Un conjunto de herramientas tecnológicas","Un contrato entre proveedor y cliente"], ans: 1, exp: "Un servicio facilita los resultados que los clientes quieren alcanzar, sin ser dueños de sus costos y riesgos relacionados." },
+  { q: "¿Cuántas funciones define ITIL V3 en la fase de Operación del Servicio?", opts: ["3","4","5","6"], ans: 1, exp: "ITIL define exactamente 4 funciones en Operación: Service Desk, Gestión Técnica, Gestión de Aplicaciones y Gestión de Operaciones TI." },
+  { q: "¿Cuál de los siguientes NO es un proceso de la Estrategia del Servicio en ITIL V3?", opts: ["Gestión del Portafolio de Servicios","Gestión Financiera","Gestión de la Demanda","Gestión de Cambios"], ans: 3, exp: "La Gestión de Cambios pertenece a la fase de Transición del Servicio, no a Estrategia." },
+  { q: "¿Qué es un SLA en ITIL V3?", opts: ["Un acuerdo entre el ITSP y otro proveedor interno","Un acuerdo entre el ITSP y el cliente que describe servicios y metas","Un contrato con proveedores externos","Un sistema de monitoreo de servicios"], ans: 1, exp: "El SLA (Service Level Agreement) describe los servicios de TI, documentos y metas de niveles del servicio, especificando responsabilidades del cliente y del ITSP." },
+  { q: "¿Cuántas 'R' tiene la herramienta de evaluación de impacto de cambios en la Transición?", opts: ["5","6","7","8"], ans: 2, exp: "Son las 7 Rs: Raised (Generó), Relación, Razón, Responsable, Retorno, Recursos y Riesgos." },
+  { q: "En ITIL V3, ¿qué es un 'Problema'?", opts: ["Una interrupción no planeada del servicio","La causa de uno o más incidentes","Un cambio de emergencia en el servicio","Una solicitud de servicio de alta prioridad"], ans: 1, exp: "Un problema es la causa de uno o más incidentes. La causa comúnmente es desconocida al crear el Registro de Problemas." },
+  { q: "¿Cuáles son las 4 etapas del Ciclo de Deming (PDCA)?", opts: ["Planificar, Diseñar, Controlar, Actuar","Planear, Hacer, Verificar, Actuar","Planear, Implementar, Revisar, Ajustar","Proponer, Hacer, Validar, Aplicar"], ans: 1, exp: "El Ciclo de Deming tiene 4 etapas: Planear, Hacer, Verificar y Actuar (PDCA). Es el fundamento de la Mejora Continua del Servicio." },
+  { q: "¿Cuántos pasos tiene el Proceso de Mejora Continua según ITIL V3?", opts: ["5 pasos","6 pasos","7 pasos","9 pasos"], ans: 2, exp: "Son 7 pasos: Definir qué debe medir, Definir qué puede medir, Recolectar datos, Procesar datos, Analizar datos, Presentar/usar información, Implementar acción correctiva." },
+  { q: "La Transición del Servicio comienza cuando recibe como entrada clave:", opts: ["Un SLA firmado","Una Petición de Cambio (RFC) del Diseño del Servicio","Un incidente de alta prioridad","Un resultado del ciclo PDCA"], ans: 1, exp: "La Transición empieza cuando recibe una Petición de Cambio (RFC: Request for Change) por parte del Diseño del Servicio como entrada clave." },
+  { q: "¿Cuál es la diferencia entre escalamiento funcional y jerárquico?", opts: ["No hay diferencia","Funcional: escala a mayor experiencia técnica. Jerárquico: involucra niveles superiores de gestión","Funcional: para incidentes. Jerárquico: para problemas","Funcional: interno. Jerárquico: externo"], ans: 1, exp: "Escalamiento Funcional transfiere a un equipo técnico con mayor experiencia (Nivel 2, Nivel 3). Escalamiento Jerárquico informa o involucra a niveles superiores de gestión." },
+  // --- ITIL 4 ---
+  { q: "¿En qué contexto surge ITIL 4?", opts: ["En la Segunda Revolución Industrial","Cuando TI necesita alinearse con el negocio","En la Cuarta Revolución Industrial y la era de la transformación digital","Durante la crisis del software de los años 80"], ans: 2, exp: "ITIL 4 surge en la Cuarta Revolución Industrial: la era de la transformación digital, donde TI busca habilitar al negocio en lugar de solo ser un activo estratégico." },
+  { q: "¿Cuántos componentes tiene el Sistema de Valor del Servicio (SVS) de ITIL 4?", opts: ["3","4","5","7"], ans: 2, exp: "El SVS tiene 5 componentes: Principios Guía, Gobernabilidad, Cadena de Valor del Servicio, Prácticas y Mejora Continua." },
+  { q: "¿Cuántos Principios Rectores tiene ITIL 4?", opts: ["4","5","7","9"], ans: 2, exp: "ITIL 4 tiene exactamente 7 Principios Rectores: Centrarse en el valor, Empezar donde estás, Progreso iterativo con retroalimentación, Colaborar y promover la visibilidad, Pensar y trabajar holísticamente, Mantenerlo simple y práctico, y Optimizar y automatizar." },
+  { q: "¿Cuál es el Principio Rector de ITIL 4 que busca eliminar los 'silos' organizacionales?", opts: ["Centrarse en el valor","Empezar donde estás","Colaborar y promover la visibilidad","Optimizar y automatizar"], ans: 2, exp: "El principio 'Colaborar y promover la visibilidad' se centra en eliminar la 'mentalidad de silo' y fomentar que los equipos trabajen juntos y compartan información." },
+  { q: "En ITIL 4, ¿qué son las 'Prácticas'?", opts: ["Son equivalentes a los procesos de ITIL v3","Conjunto de recursos organizacionales diseñados para realizar un trabajo o lograr un objetivo","Son las fases del ciclo de vida del servicio","Son los acuerdos de nivel de servicio"], ans: 1, exp: "Las Prácticas en ITIL 4 son un conjunto de recursos organizacionales diseñados para realizar un trabajo o lograr un objetivo. Reemplazan y amplían el concepto de 'procesos' de ITIL v3." },
+  { q: "¿Cuántas dimensiones tiene el modelo de gestión de servicio de ITIL 4?", opts: ["3","4","5","7"], ans: 1, exp: "ITIL 4 tiene 4 dimensiones: (1) Organizaciones y Personas, (2) Información y Tecnología, (3) Socios y Proveedores, (4) Procesos y Flujos de Valor." },
+  { q: "¿Qué dimensión de ITIL 4 incluye la cultura organizacional, roles y competencias?", opts: ["Información y Tecnología","Socios y Proveedores","Organizaciones y Personas","Procesos y Flujos de Valor"], ans: 2, exp: "La dimensión 'Organizaciones y Personas' incluye la estructura organizacional, cultura, roles, responsabilidades y las competencias del personal." },
+  { q: "¿Qué es un 'Value Stream' (flujo de valor) en ITIL 4?", opts: ["Un tipo de SLA especial","Una serie de pasos para crear y entregar productos y servicios a los usuarios","Un proceso de auditoría de servicios","Un acuerdo entre proveedor y cliente"], ans: 1, exp: "Un Value Stream es una serie de pasos que una organización utiliza para crear y entregar productos y servicios a los usuarios del servicio. Es una combinación de actividades de la cadena de valor." },
+  { q: "En ITIL 4, ¿cómo se define el 'Valor'?", opts: ["El precio pagado por un servicio","La cantidad de usuarios que usan el servicio","La percepción de los beneficios, la utilidad y la importancia de algo","El nivel de disponibilidad del servicio"], ans: 2, exp: "En ITIL 4, el Valor es 'la percepción de los beneficios, la utilidad y la importancia de algo'. Siempre es subjetivo y se co-crea entre el proveedor y el consumidor." },
+  { q: "¿Cuál es la diferencia entre 'Utilidad' y 'Garantía' en ITIL 4?", opts: ["No hay diferencia, son lo mismo","Utilidad = qué hace el servicio (fit for purpose). Garantía = cómo lo hace bien (fit for use)","Utilidad = costo. Garantía = beneficio","Utilidad es para clientes. Garantía es para usuarios"], ans: 1, exp: "Utilidad es la funcionalidad para satisfacer una necesidad (fit for purpose). Garantía asegura que el servicio cumple los requisitos acordados de disponibilidad, capacidad, continuidad y seguridad (fit for use)." },
+  { q: "¿Cuál de los siguientes NO forma parte del modelo PESTLE en ITIL 4?", opts: ["Factores Políticos","Factores Económicos","Factores Tecnológicos","Factores de Rendimiento"], ans: 3, exp: "PESTLE incluye: Político, Económico, Social, Tecnológico, Legal y Ambiental (Environmental). 'Rendimiento' no forma parte de este modelo." }
+];
+
+let qIdx = 0, score = 0, answered = 0;
+
+function loadQuestion() {
+  const q = questions[qIdx];
+  document.getElementById('q-num').textContent = qIdx + 1;
+  document.querySelector('.quiz-header h3').innerHTML = `Pregunta <span id="q-num">${qIdx + 1}</span> de ${questions.length}`;
+  document.getElementById('q-text').textContent = q.q;
+  const opts = document.getElementById('q-opts');
+  opts.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i, btn);
+    opts.appendChild(btn);
+  });
+  document.getElementById('q-feedback').className = 'quiz-feedback';
+  document.getElementById('q-next').style.display = 'none';
+  updateScore();
+}
+
+function selectAnswer(i, btn) {
+  const q = questions[qIdx];
+  const allBtns = document.querySelectorAll('.quiz-opt');
+  allBtns.forEach(b => b.disabled = true);
+  const fb = document.getElementById('q-feedback');
+  if (i === q.ans) {
+    btn.classList.add('correct');
+    score++;
+    fb.className = 'quiz-feedback show ok';
+    fb.textContent = '✅ ¡Correcto! ' + q.exp;
+  } else {
+    btn.classList.add('wrong');
+    allBtns[q.ans].classList.add('correct');
+    fb.className = 'quiz-feedback show fail';
+    fb.textContent = '❌ Incorrecto. ' + q.exp;
+  }
+  answered++;
+  updateScore();
+  document.getElementById('q-next').style.display = 'inline-block';
+  if (qIdx === questions.length - 1) document.getElementById('q-next').textContent = '🏁 Ver resultado';
+}
+
+function updateScore() {
+  document.getElementById('q-score').textContent = `Puntaje: ${score} / ${answered}`;
+}
+
+function nextQuestion() {
+  qIdx++;
+  if (qIdx >= questions.length) {
+    const pct = Math.round((score / questions.length) * 100);
+    const msg = pct >= 85 ? '🎉 ¡Excelente! Estás listo para el examen.' : pct >= 65 ? '👍 Bien, pero repasa un poco más.' : '📖 Necesitas estudiar más estos temas.';
+    document.querySelector('.quiz-body').innerHTML = `
+      <div style="text-align:center;padding:20px">
+        <div style="font-size:56px;font-family:var(--font-head);font-weight:800;color:var(--accent)">${pct}%</div>
+        <div style="font-size:18px;margin:12px 0;font-weight:500">${score} de ${questions.length} correctas</div>
+        <div style="color:var(--text2);margin-bottom:24px">${msg}</div>
+        <button class="btn-primary" onclick="location.reload()" style="font-size:14px;padding:10px 22px">Reintentar quiz</button>
+      </div>`;
+    return;
+  }
+  loadQuestion();
+}
+
+loadQuestion();
+
+// ==================== ACCORDION ====================
+document.querySelectorAll('.acc-head').forEach(h => {
+  h.addEventListener('click', () => {
+    const item = h.parentElement;
+    item.classList.toggle('open');
+  });
+});
+
+// ==================== AI CHAT ====================
+const SYSTEM_PROMPT = `Eres un experto certificado en ITIL V3 e ITIL 4 y Gestión de Servicios TI. Tienes conocimiento completo de:
+
+ITIL V3: Las 5 fases del ciclo de vida (Estrategia, Diseño, Transición, Operación, Mejora Continua), los 26 procesos, las 4 funciones de operación (Service Desk, Gestión Técnica, Gestión de Aplicaciones, Gestión de Operaciones TI), conceptos clave (SLA, OLA, CMDB, SKMS, RFC, CI, incidente, problema, error conocido, cambio estándar/normal/emergencia), las 7Rs del cambio, el ciclo PDCA y los 7 pasos de mejora, activos del servicio (capacidades y recursos).
+
+ITIL 4: El Sistema de Valor del Servicio (SVS) con sus 5 componentes (Principios Guía, Gobernabilidad, Cadena de Valor, Prácticas, Mejora Continua), los 7 Principios Rectores (Centrarse en el valor, Empezar donde estás, Progreso iterativo con retroalimentación, Colaborar y promover la visibilidad, Pensar y trabajar holísticamente, Mantenerlo simple y práctico, Optimizar y automatizar), las 4 Dimensiones (Organizaciones y Personas, Información y Tecnología, Socios y Proveedores, Procesos y Flujos de Valor), el modelo PESTLE, conceptos de Valor, Co-creación, Utilidad, Garantía, Proveedor, Consumidor (Cliente/Usuario/Sponsor), Oferta de Servicio, Value Streams.
+
+Marcos integrados: Lean (eliminación de desperdicios), Agile (Scrum, Kanban, XP), DevOps (colaboración dev+ops).
+
+Contexto Peruano: D.L. N°1412 (Ley de Gobierno Digital) y D.S. N°085-2023-PCM (Política Nacional de Transformación Digital al 2030).
+
+Esquema de certificación ITIL 4: Foundation → Especialista/Estratega (MP o SL) → Master.
+
+Diferencias clave ITIL v3 vs ITIL 4: v3 usa ciclo de vida secuencial y procesos; ITIL 4 usa SVS con cadena de valor y prácticas, centrado en co-creación de valor.
+
+Responde en español, de forma clara y concisa. Para preguntas de concepto, da la definición y un ejemplo. Para comparaciones, usa formato claro.`;
+
+const chatHistory = [];
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  addMsg('user', text);
+  input.value = '';
+  input.style.height = 'auto';
+  const btn = document.getElementById('chat-send-btn');
+  btn.disabled = true;
+  const typingId = addTyping();
+  chatHistory.push({ role: 'user', content: text });
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: chatHistory
+      })
+    });
+    const data = await response.json();
+    const reply = data.content && data.content[0] ? data.content[0].text : 'Error al obtener respuesta.';
+    chatHistory.push({ role: 'assistant', content: reply });
+    removeTyping(typingId);
+    addMsg('ai', reply);
+  } catch (e) {
+    removeTyping(typingId);
+    addMsg('ai', '⚠️ Error de conexión. Revisa tu conexión a internet e intenta de nuevo.');
+  }
+  btn.disabled = false;
+}
+
+function addMsg(role, text) {
+  const msgs = document.getElementById('chat-msgs');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const avatar = role === 'ai' ? '🤖' : '👤';
+  const formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+  div.innerHTML = `<div class="msg-avatar ${role}">${avatar}</div><div class="msg-bubble">${formatted}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+let typingCounter = 0;
+function addTyping() {
+  const id = 'typing-' + (++typingCounter);
+  const msgs = document.getElementById('chat-msgs');
+  const div = document.createElement('div');
+  div.className = 'msg ai'; div.id = id;
+  div.innerHTML = `<div class="msg-avatar ai">🤖</div><div class="msg-bubble"><div class="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return id;
+}
+
+function removeTyping(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function sendQuick(el) {
+  document.getElementById('chat-input').value = el.textContent;
+  document.getElementById('chat-section').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(sendMessage, 300);
+}
+</script>
+</body>
+</html>
